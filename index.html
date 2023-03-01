@@ -28,7 +28,7 @@ function random() {
 
 function timeanddate() {
  today = new Date();
- date = today.getDate()+"/"+(today.getMonth()+1)+"/"+today.getFullYear();
+ date = (today.getMonth()+1)+"/"+today.getDate()+"/"+today.getFullYear();
  document.getElementById("date").innerHTML = date;
 
     var to=new Date();
