@@ -4,10 +4,16 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300&display=swap" rel="stylesheet">
     <title>Cool clock</title>
 </head>
 <body id="body">
-    <p> hi </p>
+<div class="box">
+    <p id="time">Loading time...</p>
+    <p id="date">Loading date...</p>
+    </div>
 </body>
 <script>
     var picList = ["https://malwarewatch.org/images/backgrounds/background.jpg", "https://malwarewatch.org/images/backgrounds/background2.jpg", "https://malwarewatch.org/images/backgrounds/background3.jpg", "https://malwarewatch.org/images/backgrounds/background4.jpg", "https://malwarewatch.org/images/backgrounds/background5.jpg", "https://malwarewatch.org/images/backgrounds/background6.jpg", "https://malwarewatch.org/images/backgrounds/background7.jpg", "https://malwarewatch.org/images/backgrounds/background8.jpg", "https://malwarewatch.org/images/backgrounds/background9.jpg", "https://malwarewatch.org/images/backgrounds/background10.jpg", "https://malwarewatch.org/images/backgrounds/background11.jpg", "https://malwarewatch.org/images/backgrounds/background12.jpg", "https://malwarewatch.org/images/backgrounds/background13.jpg", "https://malwarewatch.org/images/backgrounds/background14.jpg", "https://malwarewatch.org/images/backgrounds/background15.jpg", "https://malwarewatch.org/images/backgrounds/background16.jpg", "https://malwarewatch.org/images/backgrounds/background17.jpg", "https://malwarewatch.org/images/backgrounds/background18.jpg", "https://malwarewatch.org/images/backgrounds/background19.jpg", "https://malwarewatch.org/images/backgrounds/background20.jpg", "https://malwarewatch.org/images/backgrounds/background21.jpg", "https://malwarewatch.org/images/backgrounds/background22.jpg", "https://malwarewatch.org/images/backgrounds/background23.jpg", "https://malwarewatch.org/images/backgrounds/background24.jpg", "https://malwarewatch.org/images/backgrounds/background25.jpg"];
@@ -17,21 +23,100 @@ random();
 function random() {
     var index = Math.floor(Math.random() * picList.length); 
     var pic = picList[index]; 
-    document.getElementById("body").style.background = 'url('+pic+')';
+    document.getElementById("body").style.setProperty('--pic', 'url('+pic+')');
 }
 
-// timing
+function timeanddate() {
+ today = new Date();
+ date = today.getDate()+"/"+(today.getMonth()+1)+"/"+today.getFullYear();
+ document.getElementById("date").innerHTML = date;
+
+    var to=new Date();
+    var h=to.getHours();
+    var m=to.getMinutes();
+    var s=to.getSeconds();
+    var ampm = "";
+    m = checkTime(m);
+    s = checkTime(s);
+    if (h > 12) {
+        h = h - 12;
+        ampm = " PM";
+    } else if (h == 12){
+        h = 12;
+        ampm = " PM";
+    } else if (h < 12){
+        ampm = " AM";
+    } else {
+        ampm = " PM";
+    };
+    if(h==0) {
+    h=12;
+    }
+time = h+":"+m+":"+s+ampm;
+document.getElementById("time").innerHTML = time
+}
+
+function checkTime(i) {
+    if (i<10) {i = "0" + i};  // add zero in front of numbers < 10
+    return i;
+}
+
+// timers
+setInterval(function(){
+    timeanddate();
+}, 500); 
+
 setInterval(function(){
     random();
 }, 10000); 
 </script>
 <style>
     body {
-        transition: background-image 3s ease-in;
-        background-repeat: no-repeat;
-  	    background-attachment: fixed; 
-        background-size: 100% 100%;
-        font-size: ;
+       transition: background-image 3s ease-in;
+       z-index:-1;
+	position:fixed;
+	left:0;
+	top:0;
+	width:100%;
+	height:100%;
+	object-fit:cover;
+	backface-visibility:hidden;
+	overflow:hidden;
+	-webkit-background-size:cover;
+	-moz-background-size:cover;
+	-o-background-size:cover;
+	background-size:cover;
+	background-repeat:no-repeat;
+	background-attachment:fixed;
+	background-position:center;
+	display:flex;
+	justify-content:center;
+	align-items:center;
+	background-image:  var(--pic)
+    }
+    
+    .box {
+    font-family: 'Inter', sans-serif;
+    color: white;
+    justify-content:center;
+    align-items:center;
+	position:absolute;
+	background:rgba(0,0,0,0.4);
+	box-shadow:rgb(0 0 0 / 37%) 0px 3.2px 7.2px 0px,rgb(0 0 0 / 35%) 0px 0.6px 1.8px 0px;
+	border-radius:8px;
+	display:flex;
+	flex-direction:column;
+	overflow:hidden;
+	width:60%;
+	height:50%;
+    }
+    
+    #time {
+    	font-size: 60px;
+    }
+    
+    #date {
+    	font-size: 30px;
     }
   </style>
 </html>
